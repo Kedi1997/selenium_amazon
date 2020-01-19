@@ -1,10 +1,11 @@
 from selenium import webdriver
 import unittest
 
-
 """
 TC1: User should be able to load Amazon's Home Page
 """
+
+
 class AmazonHomePage(unittest.TestCase):
     base_url = "https://www.amazon.in"
 
@@ -27,5 +28,3 @@ class AmazonHomePage(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-
