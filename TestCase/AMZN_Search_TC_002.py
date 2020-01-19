@@ -7,7 +7,7 @@ TC2: User should be able to search products
 """
 
 
-class AmazonHomePage(unittest.TestCase):
+class AmazonSearch(unittest.TestCase):
     base_url = "https://www.amazon.in"
     search_term = "How Google Tests Software"
 
