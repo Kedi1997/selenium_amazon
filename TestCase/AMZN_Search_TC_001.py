@@ -16,7 +16,7 @@ class AmazonHomePage(unittest.TestCase):
         self.driver.implicitly_wait(10)
 
     # -- Steps --
-    def test_amazon_home_page(self):
+    def test_load_home_page(self):
         driver = self.driver
         driver.get(self.base_url)
         self.assertIn("Amazon", driver.title)

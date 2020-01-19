@@ -1,3 +1,6 @@
+import unittest
+import HtmlTestRunner
+import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
@@ -7,7 +10,7 @@ TC2: User should be able to add product to their cart
 """
 
 
-class AddItemToCart(unittest.TestCase):
+class ViewProductDetails(unittest.TestCase):
     base_url = "https://www.amazon.in"
     search_term = "How Google Tests Software"
 
@@ -17,7 +20,25 @@ class AddItemToCart(unittest.TestCase):
         self.driver.maximize_window()
         self.driver.implicitly_wait(10)
 
-    # -- Steps --
+    # -- Steps for AMZN_Search_TC_001 --
+    def test_load_home_page(self):
+        driver = self.driver
+        driver.get(self.base_url)
+        self.assertIn("Amazon", driver.title)
+
+    # -- Steps for AMZN_Search_TC_002 --
+    def test_search_item(self):
+        driver = self.driver
+        driver.get(self.base_url)
+        search_text_box = driver.find_element_by_id("twotabsearchtextbox")
+        search_text_box.clear()
+        search_text_box.send_keys(self.search_term)
+        search_text_box.send_keys(Keys.RETURN)
+
+        self.assertIn(self.search_term, driver.title)
+        self.assertNotIn("No results found.", self.driver.page_source)
+
+    # -- Steps for AMZN_Search_TC_003 --
     def test_add_item_to_cart(self):
         driver = self.driver
         driver.get(self.base_url)
@@ -44,4 +65,4 @@ class AddItemToCart(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output="Reports"))

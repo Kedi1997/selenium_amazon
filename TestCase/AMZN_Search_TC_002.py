@@ -18,7 +18,7 @@ class AmazonSearch(unittest.TestCase):
         self.driver.implicitly_wait(10)
 
     # -- Steps --
-    def test_amazon_home_page(self):
+    def test_search_item(self):
         driver = self.driver
         driver.get(self.base_url)
         search_text_box = driver.find_element_by_id("twotabsearchtextbox")
@@ -26,7 +26,7 @@ class AmazonSearch(unittest.TestCase):
         search_text_box.send_keys(self.search_term)
         search_text_box.send_keys(Keys.RETURN)
 
-        self.assertIn(self.assertIn(), driver.title)
+        self.assertIn(self.search_term, driver.title)
         self.assertNotIn("No results found.", self.driver.page_source)
 
     # -- Post - Condition --
