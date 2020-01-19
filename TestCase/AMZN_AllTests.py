@@ -10,9 +10,9 @@ TC2: User should be able to add product to their cart
 """
 
 
-class ViewProductDetails(unittest.TestCase):
+class AmazonDemo(unittest.TestCase):
     base_url = "https://www.amazon.in"
-    search_term = "How Google Tests Software"
+    search_term = "How Google Works"
 
     # -- Pre - Condition --
     def setUp(self):
@@ -97,7 +97,25 @@ class ViewProductDetails(unittest.TestCase):
 
     # -- Steps for AMZN_Search_TC_005 --
     def test_AMZN_Search_TC_005_test_signin_to_checkout(self):
-        pass
+        """User must sign in to checkout"""
+        driver = self.driver
+        driver.get(self.base_url)
+        search_text_box = driver.find_element_by_id("twotabsearchtextbox")
+        search_text_box.clear()
+        search_text_box.send_keys(self.search_term)
+        search_text_box.send_keys(Keys.RETURN)
+
+        # to click the first search result's link
+        driver.find_element_by_xpath(
+            "(//div[@class='sg-col-inner']//img[contains(@data-image-latency,'s-product-image')])[2]").click()
+
+        # switch to new window tab since the result is opened in new tab
+        driver.switch_to.window(driver.window_handles[1])
+        driver.find_element_by_id("add-to-cart-button").click()
+        driver.find_element_by_id('hlb-ptc-btn-native').click()
+
+        self.assertTrue(driver.title.startswith("Amazon Sign In"))
+        self.assertTrue(driver.find_element_by_id('ap_email').is_displayed())
 
     # -- Post - Condition --
     def tearDown(self):

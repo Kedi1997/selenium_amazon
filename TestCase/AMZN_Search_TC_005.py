@@ -5,11 +5,11 @@ from selenium.webdriver.common.keys import Keys
 import unittest
 
 """
-TC4: User should be able to delete item from cart
+TC5: User must sign in to checkout
 """
 
 
-class DeleteItemFromCart(unittest.TestCase):
+class SignInCheckOut(unittest.TestCase):
     base_url = "https://www.amazon.in"
     search_term = "How Google Works"
 
@@ -19,9 +19,9 @@ class DeleteItemFromCart(unittest.TestCase):
         self.driver.maximize_window()
         self.driver.implicitly_wait(10)
 
-    # -- Steps for AMZN_Search_TC_004 --
-    def test_AMZN_Search_TC_004_delete_item_from_cart(self):
-        """User should be able to delete an item from cart"""
+    # -- Steps for AMZN_Search_TC_005 --
+    def test_AMZN_Search_TC_005_test_signin_to_checkout(self):
+        """User must sign in to checkout"""
         driver = self.driver
         driver.get(self.base_url)
         search_text_box = driver.find_element_by_id("twotabsearchtextbox")
@@ -36,24 +36,10 @@ class DeleteItemFromCart(unittest.TestCase):
         # switch to new window tab since the result is opened in new tab
         driver.switch_to.window(driver.window_handles[1])
         driver.find_element_by_id("add-to-cart-button").click()
-        # to confirm if the cart is empty
-        print(driver.find_element_by_id('nav-cart-count').text)
-        cart_count = int(driver.find_element_by_id("nav-cart-count").text)
-        if cart_count < 1:
-            print("Cart is Empty")
-            exit()
+        driver.find_element_by_id('hlb-ptc-btn-native').click()
 
-        # click the cart link
-        driver.find_element_by_id("nav-cart").click()
-        # confirm cart is loaded and if yes delete the cart
-        if driver.title.startswith("Amazon.in Shopping Cart"):
-            # to delete an item from the Cart
-            driver.find_element_by_xpath(
-                "//div[contains(@class,'a-row sc-action-links')]//span[contains(@class,'sc-action-delete')]").click()
-
-            time.sleep(2)
-        # to confirm the item was delete successfully
-        self.assertTrue(int(driver.find_element_by_id('nav-cart-count').text) < cart_count)
+        self.assertTrue(driver.title.startswith("Amazon Sign In"))
+        self.assertTrue(driver.find_element_by_id('ap_email').is_displayed())
 
     # -- Post - Condition --
     def tearDown(self):
